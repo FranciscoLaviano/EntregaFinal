@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View,FlatList, Pressable } from 'react-native'
 import CarroItem from '../Componentes/CarroItem'
 import { useSelector } from 'react-redux'
-//import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { usePostOrdersMutation } from '../app/services/ShopService'
 
 const Carro = () => {
-
+    const localId = useSelector(state => state.auth.value.localId)
   const cart = useSelector(state => state.cart.value)
-  const [triggerPostOrder] = usePostOrdersMutation()
+  const [triggerPostOrder,{data,isSuccess,isError,error}] = usePostOrdersMutation()
   return (
     <View style={styles.container}>
         <FlatList
@@ -16,7 +16,7 @@ const Carro = () => {
             renderItem={({item})=> <CarroItem item={item}/>}
         />
         <View style={styles.confirmContainer}>
-            <Pressable onPress={()=> triggerPostOrder(cart)}>
+            <Pressable onPress={()=> triggerPostOrder({localId, order:cart})}>
                 <Text style={styles.text}>Confirmar</Text>
             </Pressable>
             <Text style={styles.text}>Total: $ {cart.total} </Text>
@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
         marginBottom:130
     },
     confirmContainer:{
-        backgroundColor:"grey",
+        backgroundColor:"#FDE6A2",
         padding:25,
         flexDirection:"row",
         justifyContent:"space-between",
     },
     text:{
-        color:"white",
+        color:"black",
         fontFamily:"PlayFair"
     }
 })

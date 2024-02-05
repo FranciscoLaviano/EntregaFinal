@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import LoadingSpinner from '../Componentes/LoadingSpinner'
 
-const Orders = () => {
+const Ordenes = () => {
   const localId = useSelector(state => state.auth.value.localId)
   const {data,isSuccess,isError,error,isLoading} = useGetOrdersQuery(localId)
   const [info,setInfo] = useState(true)
@@ -31,7 +31,7 @@ const Orders = () => {
   )
 }
 
-export default Orders
+export default Ordenes
 
 const styles = StyleSheet.create({
     
