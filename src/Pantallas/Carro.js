@@ -8,6 +8,14 @@ const Carro = () => {
     const localId = useSelector(state => state.auth.value.localId)
   const cart = useSelector(state => state.cart.value)
   const [triggerPostOrder,{data,isSuccess,isError,error}] = usePostOrdersMutation()
+
+  useEffect(() => {
+
+    if(isSuccess && data) { console.log(data)}
+    if(isError) { console.log(error)}
+
+  }, [data,isSuccess,isError,error])
+
   return (
     <View style={styles.container}>
         <FlatList

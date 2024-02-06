@@ -6,16 +6,22 @@ import { useSelector } from 'react-redux'
 import LoadingSpinner from '../Componentes/LoadingSpinner'
 
 const Ordenes = () => {
-  const localId = useSelector(state => state.auth.value.localId)
-  const {data,isSuccess,isError,error,isLoading} = useGetOrdersQuery(localId)
+  
+  const {data,isSuccess,isError,error,isLoading} = useGetOrdersQuery()
+  const [orders, setOrders] = useState([])
   const [info,setInfo] = useState(true)
   const [errorMessage,setErrorMessage] = useState("")
   const [loading , setLoading] = useState(true)
+  const localId = useSelector(state => state.auth.value.localId)
 
   useEffect(()=>{
-    if(isSuccess && data.length === 0) setInfo(false)
-    if(isSuccess && data) setLoading(false)
-    if(isError && error ) setErrorMessage(error.error)
+    if(isSuccess && data) {  const orders = Object.keys(data).map(key => data[key])
+    
+      setOrders(orders)
+      console.log(orders)
+    }
+    
+    if(isError ) setErrorMessage(error.error)
   },[data,isSuccess,isError,error])
 
   if(!info) return <View><Text>no hay ordenes</Text></View>
@@ -24,7 +30,7 @@ const Ordenes = () => {
 
   return (
     <FlatList
-        data={data}
+        data={orders}
         keyExtractor={item => item.id}
         renderItem={({item}) => <OrderItem order={item}/>}
     />

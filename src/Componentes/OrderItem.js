@@ -9,7 +9,7 @@ const OrderItem = ({order}) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-            <Text style={styles.text1}>{new Date(order.createdAt).toLocaleString()}</Text>
+            <Text style={styles.text1}>{new Date(order.updatedAt).toLocaleString()}</Text>
             <Text style={styles.text2}>Total: $ {total}</Text>
       </View>
       <Feather name="search" size={25} color="black"/>

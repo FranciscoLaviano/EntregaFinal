@@ -23,7 +23,7 @@ export const shopApi = createApi({
 
     postOrders: builder.mutation({
       query: ({localId, order}) => ({
-        url:"ordenes.json",
+        url:`ordenes/${localId}.json`,
         method:"POST",
         body:order
       }),
@@ -31,15 +31,15 @@ export const shopApi = createApi({
   }),
 
   getOrders: builder.query({
-    query: (localId) => `ordenes.json`,
-    transformResponse:(response) => {
+    query: (localId) => `ordenes/${localId}.json`, 
+      transformResponse:(response) => {
      if(!response) return []
      const data = Object.keys(response).map(key =>({id:key,...response[key]}))
      return data
     },
     providesTags:["order"]
   }),
-
+  
 
     postProfileImage: builder.mutation({
       query: ({localId,image}) => ({
@@ -70,6 +70,7 @@ export const shopApi = createApi({
     }),
   }),
 })
+
 
 export const { useGetProductsQuery,
                useGetProductQuery,
