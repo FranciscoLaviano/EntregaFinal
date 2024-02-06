@@ -7,7 +7,7 @@ import LoadingSpinner from '../Componentes/LoadingSpinner'
 
 const Ordenes = () => {
   
-  const {data,isSuccess,isError,error,isLoading} = useGetOrdersQuery()
+  const {data,isSuccess,isError,error,isLoading} = useGetOrdersQuery(localId)
   const [orders, setOrders] = useState([])
   const [info,setInfo] = useState(true)
   const [errorMessage,setErrorMessage] = useState("")
@@ -18,15 +18,20 @@ const Ordenes = () => {
     if(isSuccess && data) {  const orders = Object.keys(data).map(key => data[key])
     
       setOrders(orders)
-      console.log(orders)
     }
+    if(isSuccess && data.length === 0)    setInfo(false)
+    },[data,isSuccess,isError,error])
+   
+    
     
     if(isError ) setErrorMessage(error.error)
-  },[data,isSuccess,isError,error])
+  
 
   if(!info) return <View><Text>no hay ordenes</Text></View>
   if(errorMessage) return  <View><Text>Error al cargar</Text></View>
   if(loading) return  <LoadingSpinner/>
+
+  
 
   return (
     <FlatList
@@ -34,8 +39,9 @@ const Ordenes = () => {
         keyExtractor={item => item.id}
         renderItem={({item}) => <OrderItem order={item}/>}
     />
+    
   )
-}
+  }
 
 export default Ordenes
 
