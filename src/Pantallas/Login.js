@@ -5,7 +5,7 @@ import SubmitButton from '../Componentes/SubmitButton'
 import { useLoginMutation } from '../app/services/Auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../funciones/auth/AuthSlice'
-import { insertSession } from '../database'
+import { insertSession } from '../database/index'
 
 
 
