@@ -5,62 +5,36 @@ import SubmitButton from '../Componentes/SubmitButton'
 import { useLoginMutation } from '../app/services/Auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../funciones/auth/AuthSlice'
-import { insertSession } from '../database'
 
 
 
-
-
-const Login = ({navigation}) => {
-  const dispatch = useDispatch()
+const Logout = ({navigation}) => {
+  //const dispatch = useDispatch()
   const [triggerLogin,{data,isError,isSuccess,error,isLoading}] = useLoginMutation()
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
 
   useEffect(()=>{
-    if(isSuccess) {dispatch(setUser(data))
-                   insertSession(data)
-                    .then(result => console.log(result))
-                    .catch(err => console.log(err))
-                  
-                  }
+    if(isSuccess) alert("se ha deslogueado")
     if(isError) console.log(error) 
   },[data,isError,isSuccess])
 
 
-  const onSubmit = () => {
+/*  const onSubmit = () => {
     triggerLogin({email,password})
-  }
+  }*/
   return (
     <View style={styles.main}>
       <View style={styles.container}>
           <Text style={styles.title} >Login para comprar</Text>
-          <InputForm
-            label="Email"
-            value={email}
-            onChangeText={(t) => setEmail(t)}
-            isSecure = {false}
-            error=""
-          />
-          <InputForm
-            label="Password"
-            value={password}
-            onChangeText={(t) => setPassword(t)}
-            isSecure={true}
-            error=""
-          />
-          <SubmitButton onPress={onSubmit}  title="Anotarme"/>
-          <Text style={styles.sub}>¿Aún no tienes cuenta?</Text>
-          <Pressable onPress={()=> navigation.navigate("SignUp")} >
-              <Text style={styles.subLink}>Registrarse</Text>
-          </Pressable>
+          
       </View>
     </View>
   )
 }
 
 
-export default Login
+export default Logout
 
 
 const styles = StyleSheet.create({

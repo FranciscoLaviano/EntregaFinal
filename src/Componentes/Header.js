@@ -1,11 +1,23 @@
-import { StyleSheet, Text, View} from 'react-native'
+import { Pressable, StyleSheet, Text, View} from 'react-native'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
+import { deleteSession } from '../database'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const Header = ({title = "Producto"}) => {
+  const dispatch = useDispatch()
+  const localId = useSelector(state => state.auth.value.localId)
+  const onLogout = ()=> {
+      deleteSession(localId)
+      dispatch(clearUser)
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{title}</Text>
+      <Pressable style={styles.logoutIcon}>
+        <MaterialCommunityIcons name='Logout' size={30} color="red" />
+      </Pressable>
     </View>
   )
 }
@@ -23,5 +35,11 @@ const styles = StyleSheet.create({
     text:{
         fontSize:20,
         fontFamily:"Josefin"
+    },
+
+    logoutIcon:{
+           possition: "absolute",
+           right: 7
+
     }
 })
