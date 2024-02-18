@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
-const db = SQLite.openDatabase("session.db");
+const db = SQLite.openDatabase('session.db');
 
 export const insertSession = ({ localId, email, idToken }) => {
   const promise = new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ export const insertSession = ({ localId, email, idToken }) => {
       tx.executeSql(
         "INSERT INTO session (localId ,email ,idToken) VALUES ( ?, ? , ?);",
         [localId, email, idToken],
-        (...result) => resolve(result),
+        (_,result) => resolve(result),
         (_, err) => reject(err)
       );
     });
