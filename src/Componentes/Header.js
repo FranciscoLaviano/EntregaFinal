@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View} from 'react-native'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-import { deleteSession } from '../database'
+import {  deleteAllSession } from '../database'
 import { useDispatch, useSelector } from 'react-redux'
 
 
@@ -8,16 +8,19 @@ const Header = ({title = "Producto"}) => {
   const dispatch = useDispatch()
   const localId = useSelector(state => state.auth.value.localId)
   const onLogout = ()=> {
-      deleteSession(localId)
+      deleteAllSession()
       dispatch(clearUser)
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{title}</Text>
-      <Pressable style={styles.logoutIcon}>
-        <MaterialCommunityIcons name='Logout' size={30} color="red" />
-      </Pressable>
+       {localId && 
+        <Pressable style={styles.logoutIcon}>
+         <MaterialCommunityIcons name='Logout' size={30} color="red" />
+        </Pressable>
+       } 
+
     </View>
   )
 }
